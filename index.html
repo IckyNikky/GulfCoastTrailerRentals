@@ -4,14 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gulf Coast Trailer Rentals</title>
+
+<!-- ══════════════════════════════
+     FAVICON
+     Replace favicon.ico with your actual icon file.
+     For best results, provide:
+       - favicon.ico         (32×32, for older browsers)
+       - favicon-192.png     (192×192, for Android/Chrome)
+       - favicon-apple.png   (180×180, for iOS "Add to Home Screen")
+     ══════════════════════════════ -->
+<link rel="icon" type="image/x-icon" href="https://i.imgur.com/W4o3U2u.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://i.imgur.com/h8hCwL6.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/mbATTis.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/h8hCwL6.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://i.imgur.com/mbATTis.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://i.imgur.com/h8hCwL6.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://i.imgur.com/PVaoxvp.png">
-<link rel="manifest" href="/site.webmanifest">
 
 <style>
 /* ── Reset & Base ── */
@@ -305,6 +313,67 @@ body {
     line-height: 1.55;
 }
 
+/* ── Trailer Photo Strip ── */
+.trailer-strip {
+    /* ══════════════════════════════════════════════
+       YOUR TRAILER PHOTO
+       Replace the URL below with your image file.
+       Example: url('my-trailer.jpg')
+       Best results: wide landscape photo, at least 1400×700px.
+       Delete the .trailer-strip-placeholder div in the HTML once set.
+       ══════════════════════════════════════════════ */
+    background-image: url('https://i.imgur.com/jnljVrw.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* parallax scroll effect */
+    background-color: #1a4a6b;   /* fallback while no image is set */
+    height: 500px;
+    position: relative;
+}
+
+/* Soft fade into the sections above and below */
+.trailer-strip::before,
+.trailer-strip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    pointer-events: none;
+    z-index: 1;
+}
+.trailer-strip::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--white) 0%, transparent 100%);
+}
+.trailer-strip::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--off-white) 0%, transparent 100%);
+}
+
+/* Placeholder shown until you add a real photo */
+.trailer-strip-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.85rem;
+    text-align: center;
+    z-index: 2;
+}
+.trailer-strip-placeholder span:first-child { font-size: 3.5rem; opacity: 0.4; }
+
+@media (max-width: 768px) {
+    .trailer-strip {
+        height: 320px;
+        background-attachment: scroll; /* fixed doesn't work well on mobile */
+    }
+}
+
 /* ── CTA Band ── */
 .cta-band {
     background: linear-gradient(120deg, var(--navy) 0%, var(--teal) 100%);
@@ -370,6 +439,55 @@ footer .footer-divider {
 }
 
 footer p { margin-bottom: 4px; }
+
+/* ── Google Review Strip ── */
+.review-strip {
+    background: var(--off-white);
+    border-top: 1px solid var(--card-border);
+    text-align: center;
+    padding: 36px 24px;
+}
+
+.review-strip p {
+    font-size: 0.95rem;
+    color: var(--mid);
+    margin-bottom: 14px;
+}
+
+.review-strip p strong {
+    color: var(--charcoal);
+}
+
+.btn-google-review {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    color: var(--charcoal);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 6px;
+    border: 1.5px solid var(--card-border);
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+.btn-google-review:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    transform: translateY(-2px);
+}
+
+/* Google "G" colors */
+.g-letter { font-size: 1.2rem; font-weight: 800; }
+.g-b { color: #4285F4; }
+.g-r { color: #EA4335; }
+.g-y { color: #FBBC05; }
+.g-g { color: #34A853; }
+
+/* Google stars */
+.google-stars { color: #FBBC05; font-size: 1rem; letter-spacing: 1px; }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
@@ -468,6 +586,21 @@ footer p { margin-bottom: 4px; }
     </div>
 </section>
 
+<!-- ══════════════════════════════════════════
+     TRAILER PHOTO STRIP — purely aesthetic, no buttons or copy.
+     1. In the CSS above, find .trailer-strip and change:
+           background-image: url('YOUR-TRAILER-PHOTO-HERE.jpg');
+        to your actual image file, e.g. url('my-trailer.jpg')
+     2. Put the photo file in the same folder as index.html
+     3. Delete the <div class="trailer-strip-placeholder"> block below
+     ══════════════════════════════════════════ -->
+<div class="trailer-strip">
+    <div class="trailer-strip-placeholder">
+        <span>🚛</span>
+        <span>Your trailer photo goes here.<br>See the CSS comment on <code>.trailer-strip</code></span>
+    </div>
+</div>
+
 <!-- CTA Band -->
 <section class="cta-band">
     <div class="slash-up">
@@ -479,6 +612,7 @@ footer p { margin-bottom: 4px; }
     <p>Check availability and book your trailer online — it only takes a few minutes.</p>
     <a href="https://bigrentals.com/partner/6d30051f-b491-11" class="btn-primary">Check Availability</a>
 </section>
+
 <!-- Google Review Strip -->
 <!-- Replace YOUR-GOOGLE-REVIEW-LINK-HERE with your actual Google review URL.
      To find it: Google your business → click "Reviews" → "Get more reviews" → copy the link. -->
@@ -498,8 +632,8 @@ footer p { margin-bottom: 4px; }
     <div class="footer-brand">Gulf Coast Trailer Rentals</div>
     <p>Serving Tampa Bay and Surrounding Areas</p>
     <div class="footer-divider"></div>
-    <p>📞 <a href="tel:8134555148">(813)455-5148</a></p>
-    <p>✉️ <a href="mailto:GCTrailerRentals@gmail.com">GCTrailerRentals@gmail.com</a></p>
+    <p>📞 <a href="tel:8134555148">(813) 455-5148</a></p>
+    <p>✉️ <a href="mailto:info@gulfcoasttrailerrentals.com">info@gulfcoasttrailerrentals.com</a></p>
     <p style="margin-top:20px; font-size:0.78rem; opacity:0.5;">© 2026 Gulf Coast Trailer Rentals. All rights reserved.</p>
 </footer>
 
